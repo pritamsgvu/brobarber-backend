@@ -6,6 +6,8 @@ const TransactionSchema = new mongoose.Schema({
     selectedProducts: [String],
     serviceAmount: Number,
     totalProductAmount: Number,
+    discount: Number,
+    netTotal: Number,
     paymentMode: String
 });
 module.exports = mongoose.model('Transaction', TransactionSchema);

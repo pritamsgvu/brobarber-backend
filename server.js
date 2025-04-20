@@ -15,12 +15,16 @@ const Barber = require('./models/Barber');
 const Service = require('./models/Service');
 const Product = require('./models/Product');
 const Transaction = require('./models/Transaction');
+const User = require('./models/User');
+
 
 // Routes
 app.use('/api/barbers', require('./routes/barbers'));
 app.use('/api/services', require('./routes/services'));
 app.use('/api/products', require('./routes/products'));
 app.use('/api/transactions', require('./routes/transactions'));
+app.use('/api/users', require('./routes/users'));
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
