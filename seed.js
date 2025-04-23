@@ -4,14 +4,16 @@ require('dotenv').config();
 const Barber = require('./models/Barber');
 const Product = require('./models/Product');
 const Service = require('./models/Service');
+const Transaction = require('./models/Transaction');
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(async () => {
-  await Barber.deleteMany();
-  await Product.deleteMany();
-  await Service.deleteMany();
+  await Barber.deleteMany({});
+  await Service.deleteMany({});
+  await Product.deleteMany({});
+  // await Transaction.deleteMany({});
 
   const barbers = [
     { name: "Chunnu", mobile: "9876543210", address: "Area 1", aadhar: "123456789012", photo: "" },
