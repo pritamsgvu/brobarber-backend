@@ -8,6 +8,9 @@ const TransactionSchema = new mongoose.Schema({
     totalProductAmount: Number,
     discount: Number,
     netTotal: Number,
-    paymentMode: String
+    paymentMode: String,
+    customerName: { type: String, default: null },
+    mobileNumber: { type: String, default: null },
+    createdAt: { type: Date, default: Date.now }
 });
 module.exports = mongoose.model('Transaction', TransactionSchema);
