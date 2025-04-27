@@ -16,6 +16,7 @@ const Service = require('./models/Service');
 const Product = require('./models/Product');
 const Transaction = require('./models/Transaction');
 const User = require('./models/User');
+const Todo = require('./models/Todo');
 
 
 // Routes
@@ -24,6 +25,7 @@ app.use('/api/services', require('./routes/services'));
 app.use('/api/products', require('./routes/products'));
 app.use('/api/transactions', require('./routes/transactions'));
 app.use('/api/users', require('./routes/users'));
+app.use('/api/todos', require('./routes/todo'));
 
 
 const PORT = process.env.PORT || 5000;
