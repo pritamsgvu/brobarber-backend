@@ -5,6 +5,8 @@ const TransactionSchema = new mongoose.Schema({
     selectedServices: [String],
     selectedProducts: [String],
     serviceAmount: Number,
+    cashAmount: Number,
+    onlineAmount: Number,
     totalProductAmount: Number,
     discount: Number,
     netTotal: Number,
