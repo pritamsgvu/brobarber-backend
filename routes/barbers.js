@@ -27,10 +27,10 @@ router.get('/:id', async (req, res) => {
 
 // POST to add a new barber
 router.post('/', async (req, res) => {
-  const { name, mobile, address, aadhar, photo } = req.body;
+  const { name, mobile, address, aadhar, photo, isActive } = req.body;
 
   try {
-    const barber = new Barber({ name, mobile, address, aadhar, photo });
+    const barber = new Barber({ name, mobile, address, aadhar, photo, isActive });
     await barber.save();
     res.status(201).json(barber);
   } catch (error) {
@@ -40,12 +40,12 @@ router.post('/', async (req, res) => {
 
 // PUT to update an existing barber
 router.put('/:id', async (req, res) => {
-  const { name, mobile, address, aadhar, photo } = req.body;
+  const { name, mobile, address, aadhar, photo, isActive } = req.body;
 
   try {
     const barber = await Barber.findByIdAndUpdate(
       req.params.id,
-      { name, mobile, address, aadhar, photo },
+      { name, mobile, address, aadhar, photo, isActive },
       { new: true }
     );
 
