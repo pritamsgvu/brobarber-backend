@@ -16,10 +16,85 @@ mongoose.connect(process.env.MONGO_URI, {
   // await Transaction.deleteMany({});
 
   const barbers = [
-    { name: "Chunnu", mobile: "9876543210", address: "Area 1", aadhar: "123456789012", photo: "" },
-    { name: "Deepak", mobile: "9876543210", address: "Area 1", aadhar: "123456789012", photo: "" },
-    { name: "Sharwan", mobile: "8765432109", address: "Area 2", aadhar: "234567890123", photo: "" }
+    {
+      name: "Chunnu",
+      mobile: "9876543210",
+      address: "Area 1",
+      aadhar: "123456789012",
+      photo: "",
+      username: "chunnu",
+      password: "chunnu123",
+      role: "barber",
+      isActive: "true"
+    },
+    {
+      name: "Deepak",
+      mobile: "9876543210",
+      address: "Area 1",
+      aadhar: "123456789012",
+      photo: "",
+      username: "deepak",
+      password: "deepak123",
+      role: "barber",
+      isActive: "true"
+    },
+    {
+      name: "Sharwan",
+      mobile: "8765432109",
+      address: "Area 2",
+      aadhar: "234567890123",
+      photo: "",
+      username: "sharwan",
+      password: "sharwan123",
+      role: "barber",
+      isActive: "true"
+    },
+    {
+      name: "Faizan",
+      mobile: "7654321098",
+      address: "Area 3",
+      aadhar: "345678901234",
+      photo: "",
+      username: "faizan",
+      password: "faizan123",
+      role: "barber",
+      isActive: "true"
+    },
+    {
+      name: "Rishav",
+      mobile: "9988776655",
+      address: "Area 4",
+      aadhar: "456789012345",
+      photo: "",
+      username: "rishav",
+      password: "rishav123",
+      role: "barber",
+      isActive: "true"
+    },
+    {
+      name: "Bullu",
+      mobile: "8899776655",
+      address: "Manager Area",
+      aadhar: "567890123456",
+      photo: "",
+      username: "bullu",
+      password: "bullu123",
+      role: "manager",
+      isActive: "true"
+    },
+    {
+      name: "brobarber",
+      mobile: "9000000000",
+      address: "Admin Office",
+      aadhar: "678901234567",
+      photo: "",
+      username: "brobarber",
+      password: "brobarber",
+      role: "admin",
+      isActive: "true"
+    }
   ];
+  
   await Barber.insertMany(barbers);
 
   const services = await Service.insertMany([
