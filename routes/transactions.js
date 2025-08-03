@@ -62,4 +62,45 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+
+router.get('/monthly-payment-summary', async (req, res) => {
+    try {
+      const { fromDate, toDate } = req.query;
+  
+      if (!fromDate || !toDate) {
+        return res.status(400).json({ message: 'Missing fromDate or toDate' });
+      }
+  
+      const from = new Date(fromDate);
+      const to = new Date(toDate);
+  
+      const transactions = await Transaction.find({
+        date: { $gte: from, $lte: to }
+      });
+  
+      let totalCashReceived = 0;
+      let totalOnlineReceived = 0;
+  
+      transactions.forEach(t => {
+        if (t.paymentMode === 'cash') {
+          totalCashReceived += (t.netTotal || 0) + (t.totalProductAmount || 0);
+        } else if (t.paymentMode === 'online') {
+          totalOnlineReceived += (t.netTotal || 0) + (t.totalProductAmount || 0);
+        } else if (t.paymentMode === 'both') {
+          totalCashReceived += t.cashAmount || 0;
+          totalOnlineReceived += t.onlineAmount || 0;
+        }
+      });
+  
+      res.json({
+        totalCashReceived,
+        totalOnlineReceived
+      });
+    } catch (err) {
+      console.error('Error in /monthly-payment-summary:', err);
+      res.status(500).json({ message: 'Server error' });
+    }
+  });
+  
+
 module.exports = router;
