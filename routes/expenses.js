@@ -154,5 +154,49 @@ router.get('/earnings-report', async (req, res) => {
   }
 });
 
+router.get('/barber-commission/current-month', async (req, res) => {
+  try {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+    const report = await Expense.aggregate([
+      {
+        $match: {
+          expenseType: 'barberCommission',
+          date: { $gte: startOfMonth, $lte: endOfMonth }
+        }
+      },
+      {
+        $group: {
+          _id: "$barberId",
+          totalTaken: { $sum: "$expenseAmount" }
+        }
+      },
+      {
+        $lookup: {
+          from: "barbers", // 🔥 collection name for Barbers
+          localField: "_id",
+          foreignField: "_id",
+          as: "barber"
+        }
+      },
+      { $unwind: "$barber" },
+      {
+        $project: {
+          _id: 0,
+          barberId: "$_id",
+          barberName: "$barber.name",
+          totalTaken: 1
+        }
+      }
+    ]);
+
+    res.json(report);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 module.exports = router;
