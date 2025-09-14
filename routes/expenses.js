@@ -156,15 +156,27 @@ router.get('/earnings-report', async (req, res) => {
 
 router.get('/barber-commission/current-month', async (req, res) => {
   try {
-    const now = new Date();
-    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    const { fromDate, toDate } = req.query;
+
+    let startDate, endDate;
+
+    if (fromDate && toDate) {
+      startDate = new Date(fromDate);
+      endDate = new Date(toDate);
+      // Adjust to end of the day
+      endDate.setHours(23, 59, 59, 999);
+    } else {
+      const now = new Date();
+      startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+      endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+      endDate.setHours(23, 59, 59, 999);
+    }
 
     const report = await Expense.aggregate([
       {
         $match: {
           expenseType: 'barberCommission',
-          date: { $gte: startOfMonth, $lte: endOfMonth }
+          date: { $gte: startDate, $lte: endDate }
         }
       },
       {
@@ -175,7 +187,7 @@ router.get('/barber-commission/current-month', async (req, res) => {
       },
       {
         $lookup: {
-          from: "barbers", // 🔥 collection name for Barbers
+          from: "barbers", // Collection name for Barbers
           localField: "_id",
           foreignField: "_id",
           as: "barber"
@@ -197,6 +209,7 @@ router.get('/barber-commission/current-month', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 
 module.exports = router;
